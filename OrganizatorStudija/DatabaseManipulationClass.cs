@@ -40,7 +40,8 @@ namespace OrganizatorStudija
                     if (appUser.user_name == argUserName && appUser.password == argPassword) // Authentication success
                     {
                         argLoginForm.Hide();
-                        ControlPanelForm appControlPanel = new ControlPanelForm(argLoginForm, appUser.first_name, appUser.last_name, appUser.user_id);
+                        ControlPanelForm appControlPanel = new ControlPanelForm(argLoginForm, appUser.first_name, appUser.last_name);
+                        appControlPanel.argUserId = appUser.user_id;
                         appControlPanel.Show();
                     }
                     else // Authentication fail
@@ -362,11 +363,12 @@ namespace OrganizatorStudija
                 DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Course successfully added!");
                 appDisplayMessage.Show();
             }
-            catch
+            catch(Exception e)
             {
                 // Fail
                 DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Error adding course!");
                 appDisplayMessage.Show();
+                MessageBox.Show(e.ToString());
             }
         }
 
@@ -426,7 +428,7 @@ namespace OrganizatorStudija
             catch
             {
                 // Fail
-                DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Error creating new staff member!");
+                DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Error executing query!");
                 appDisplayMessage.Show();
                 return null;
             }
@@ -452,6 +454,23 @@ namespace OrganizatorStudija
         }
 
         // TASK TABLE FUNCTIONS
+        public List<task> getAllTasks()
+        {
+            try
+            {
+                List<task> returnData = new List<task>();
+                returnData = appDb.tasks.ToList();
+                return returnData;
+            }
+            catch
+            {
+                // Fail
+                DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Error executing query!");
+                appDisplayMessage.Show();
+                return null;
+            }
+        }
+
         public void insertTask(String argName, String argDescription, short argPoints, short argMaxPoints, String argStart, String argEnd, String argStatus, int argOwner, int argCourse)
         {
             try
@@ -476,6 +495,44 @@ namespace OrganizatorStudija
             {
                 // Fail
                 DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Error adding task!");
+                appDisplayMessage.Show();
+            }
+        }
+
+        public task getTaskByName(String argTaskName)
+        {
+            try
+            {
+                // Success
+                task appTask = appDb.tasks.SingleOrDefault(element => element.name == argTaskName);
+                return appTask;
+            }
+            catch
+            {
+                // Fail
+                DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Error executing query!");
+                appDisplayMessage.Show();
+                return null;
+            }
+        }
+
+        public void removeTask(int argTaskId)
+        {
+            try
+            {
+                // Success
+                // Create task class, prepare row to delete
+                task appTask = appDb.tasks.SingleOrDefault(element => element.task_id == argTaskId);
+                appDb.tasks.Remove(appTask);
+                DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Task succesfully removed!");
+                appDisplayMessage.Show();
+                appDb.SaveChanges();
+
+            }
+            catch
+            {
+                // Fail
+                DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Error removing task!");
                 appDisplayMessage.Show();
             }
         }

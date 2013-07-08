@@ -15,6 +15,7 @@ namespace OrganizatorStudija
         DatabaseManipulationClass dbClass = new DatabaseManipulationClass();
         public String courseName;
         public int loggedUserId;
+        public CourseForm appCourseForm = null;
 
         // GET, SET ATTRIBUTES
         public String argCourseName
@@ -51,7 +52,8 @@ namespace OrganizatorStudija
 
         private void cancleButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
+            this.appCourseForm.Show();
         }
 
         private void addButton_Click(object sender, EventArgs e)
@@ -67,6 +69,7 @@ namespace OrganizatorStudija
             short argMaxPoints = Convert.ToInt16(points[1]);
             // Call insert function from DatabaseManipulationClass
             dbClass.insertTask(nameTextBox.Text, descriptionTextBox.Text, argPoints, argMaxPoints, argStartDate, argEndDate, argStatus, loggedUserId, argCourse.course_id);
+            this.appCourseForm.refreshTaskList();
         }
     }
 }

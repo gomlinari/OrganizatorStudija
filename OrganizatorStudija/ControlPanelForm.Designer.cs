@@ -33,16 +33,22 @@
             this.logoutLinkLabel = new System.Windows.Forms.LinkLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.coursesTabPage = new System.Windows.Forms.TabPage();
-            this.displayLabel = new System.Windows.Forms.Label();
+            this.coursesDisplayLabel = new System.Windows.Forms.Label();
             this.courseTypeComboBox = new System.Windows.Forms.ComboBox();
             this.coursesGroupBox = new System.Windows.Forms.GroupBox();
             this.removeCourseButton = new System.Windows.Forms.Button();
             this.addCourseButton = new System.Windows.Forms.Button();
             this.coursesListBox = new System.Windows.Forms.ListBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.taskTabPage = new System.Windows.Forms.TabPage();
+            this.taskListBox = new System.Windows.Forms.ListBox();
+            this.taskDisplayLabel = new System.Windows.Forms.Label();
+            this.taskTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.taskGroupBox = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.coursesTabPage.SuspendLayout();
             this.coursesGroupBox.SuspendLayout();
+            this.taskTabPage.SuspendLayout();
+            this.taskGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // loggedUser
@@ -80,7 +86,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.coursesTabPage);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.taskTabPage);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -89,7 +95,7 @@
             // 
             // coursesTabPage
             // 
-            this.coursesTabPage.Controls.Add(this.displayLabel);
+            this.coursesTabPage.Controls.Add(this.coursesDisplayLabel);
             this.coursesTabPage.Controls.Add(this.courseTypeComboBox);
             this.coursesTabPage.Controls.Add(this.coursesGroupBox);
             this.coursesTabPage.Location = new System.Drawing.Point(4, 27);
@@ -100,14 +106,14 @@
             this.coursesTabPage.Text = "Courses";
             this.coursesTabPage.UseVisualStyleBackColor = true;
             // 
-            // displayLabel
+            // coursesDisplayLabel
             // 
-            this.displayLabel.AutoSize = true;
-            this.displayLabel.Location = new System.Drawing.Point(286, 19);
-            this.displayLabel.Name = "displayLabel";
-            this.displayLabel.Size = new System.Drawing.Size(88, 18);
-            this.displayLabel.TabIndex = 2;
-            this.displayLabel.Text = "Display:";
+            this.coursesDisplayLabel.AutoSize = true;
+            this.coursesDisplayLabel.Location = new System.Drawing.Point(286, 19);
+            this.coursesDisplayLabel.Name = "coursesDisplayLabel";
+            this.coursesDisplayLabel.Size = new System.Drawing.Size(88, 18);
+            this.coursesDisplayLabel.TabIndex = 2;
+            this.coursesDisplayLabel.Text = "Display:";
             // 
             // courseTypeComboBox
             // 
@@ -164,15 +170,58 @@
             this.coursesListBox.TabIndex = 0;
             this.coursesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.coursesListBox_MouseDoubleClick);
             // 
-            // tabPage2
+            // taskTabPage
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 27);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(513, 560);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.taskTabPage.Controls.Add(this.taskDisplayLabel);
+            this.taskTabPage.Controls.Add(this.taskTypeComboBox);
+            this.taskTabPage.Controls.Add(this.taskGroupBox);
+            this.taskTabPage.Location = new System.Drawing.Point(4, 27);
+            this.taskTabPage.Name = "taskTabPage";
+            this.taskTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.taskTabPage.Size = new System.Drawing.Size(513, 560);
+            this.taskTabPage.TabIndex = 1;
+            this.taskTabPage.Text = "User tasks";
+            this.taskTabPage.UseVisualStyleBackColor = true;
+            // 
+            // taskListBox
+            // 
+            this.taskListBox.FormattingEnabled = true;
+            this.taskListBox.ItemHeight = 18;
+            this.taskListBox.Location = new System.Drawing.Point(6, 25);
+            this.taskListBox.Name = "taskListBox";
+            this.taskListBox.Size = new System.Drawing.Size(488, 472);
+            this.taskListBox.TabIndex = 0;
+            // 
+            // taskDisplayLabel
+            // 
+            this.taskDisplayLabel.AutoSize = true;
+            this.taskDisplayLabel.Location = new System.Drawing.Point(286, 19);
+            this.taskDisplayLabel.Name = "taskDisplayLabel";
+            this.taskDisplayLabel.Size = new System.Drawing.Size(88, 18);
+            this.taskDisplayLabel.TabIndex = 5;
+            this.taskDisplayLabel.Text = "Display:";
+            // 
+            // taskTypeComboBox
+            // 
+            this.taskTypeComboBox.FormattingEnabled = true;
+            this.taskTypeComboBox.Items.AddRange(new object[] {
+            "All",
+            "Active",
+            "Inactive"});
+            this.taskTypeComboBox.Location = new System.Drawing.Point(380, 16);
+            this.taskTypeComboBox.Name = "taskTypeComboBox";
+            this.taskTypeComboBox.Size = new System.Drawing.Size(121, 26);
+            this.taskTypeComboBox.TabIndex = 4;
+            // 
+            // taskGroupBox
+            // 
+            this.taskGroupBox.Controls.Add(this.taskListBox);
+            this.taskGroupBox.Location = new System.Drawing.Point(7, 48);
+            this.taskGroupBox.Name = "taskGroupBox";
+            this.taskGroupBox.Size = new System.Drawing.Size(500, 506);
+            this.taskGroupBox.TabIndex = 3;
+            this.taskGroupBox.TabStop = false;
+            this.taskGroupBox.Text = "Tasks:";
             // 
             // ControlPanelForm
             // 
@@ -189,11 +238,15 @@
             this.Name = "ControlPanelForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Control Panel";
+            this.Activated += new System.EventHandler(this.ControlPanelForm_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ControlPanelForm_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.coursesTabPage.ResumeLayout(false);
             this.coursesTabPage.PerformLayout();
             this.coursesGroupBox.ResumeLayout(false);
+            this.taskTabPage.ResumeLayout(false);
+            this.taskTabPage.PerformLayout();
+            this.taskGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,12 +259,16 @@
         private System.Windows.Forms.LinkLabel logoutLinkLabel;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage coursesTabPage;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage taskTabPage;
         private System.Windows.Forms.GroupBox coursesGroupBox;
         private System.Windows.Forms.Button removeCourseButton;
         private System.Windows.Forms.Button addCourseButton;
         private System.Windows.Forms.ListBox coursesListBox;
         private System.Windows.Forms.ComboBox courseTypeComboBox;
-        private System.Windows.Forms.Label displayLabel;
+        private System.Windows.Forms.Label coursesDisplayLabel;
+        private System.Windows.Forms.Label taskDisplayLabel;
+        private System.Windows.Forms.ComboBox taskTypeComboBox;
+        private System.Windows.Forms.GroupBox taskGroupBox;
+        private System.Windows.Forms.ListBox taskListBox;
     }
 }

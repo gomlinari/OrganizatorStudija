@@ -14,13 +14,25 @@ namespace OrganizatorStudija
     {
         DatabaseManipulationClass dbClass = new DatabaseManipulationClass();
         LoginForm appLoginForm = null;
-        private int LoggedUserId;
-        public ControlPanelForm(LoginForm argLoginForm, String argFirstName, String argLastName, int argUserId)
+        public int loggedUserId;
+
+        public int argUserId
+        {
+            get
+            {
+                return this.loggedUserId;
+            }
+            set
+            {
+                this.loggedUserId = value;
+            }
+        }
+
+        // Constructor
+        public ControlPanelForm(LoginForm argLoginForm, String argFirstName, String argLastName)
         {
             appLoginForm = argLoginForm;
-            LoggedUserId = argUserId;
             InitializeComponent();
-            this.refreshUserCoursesList();
             this.userNameLabel.Text = argFirstName + " " + argLastName;
             this.courseTypeComboBox.SelectedIndex = 0;
         }
@@ -35,7 +47,7 @@ namespace OrganizatorStudija
         private void addCourseButton_Click(object sender, EventArgs e)
         {
             CoursesForm appAddCourseForm = CoursesForm.Instance;
-            appAddCourseForm.LoggedUserId = this.LoggedUserId;
+            appAddCourseForm.LoggedUserId = this.loggedUserId;
             appAddCourseForm.ControlPanel = this;
             appAddCourseForm.Show();
         }
@@ -50,7 +62,7 @@ namespace OrganizatorStudija
             // Iterate through table row's
             foreach (userCourses element in userCoursesList)
             {
-                if (element.table_user_id == this.LoggedUserId) // For currently logged user
+                if (element.table_user_id == this.loggedUserId) // For currently logged user
                 {
                     // Get course by id
                     appCourseToAppend = dbClass.getCourseById(element.table_course_id);
@@ -100,13 +112,23 @@ namespace OrganizatorStudija
 
         private void removeCourseButton_Click(object sender, EventArgs e)
         {
-            // Remove selected course
-            String selectedCourse = this.coursesListBox.SelectedItem.ToString();
-            // Get selected index
-            course appSelectedCourse = dbClass.getCourseByName(selectedCourse);
-            user appLoggedUser = dbClass.getUserById(this.LoggedUserId);
-            dbClass.removeUserCourse(appLoggedUser.user_id, appSelectedCourse.course_id);
-            this.refreshUserCoursesList();
+            if (this.coursesListBox.SelectedItem != null)
+            {
+                String selectedCourse = null;
+                course appSelectedCourse = null;
+                // Remove selected course
+                selectedCourse = this.coursesListBox.SelectedItem.ToString();
+                // Get selected index
+                appSelectedCourse = dbClass.getCourseByName(selectedCourse);
+                user appLoggedUser = dbClass.getUserById(this.loggedUserId);
+                dbClass.removeUserCourse(appLoggedUser.user_id, appSelectedCourse.course_id);
+                this.refreshUserCoursesList();
+            }
+            else
+            {
+                DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Please select which course to remove!");
+                appDisplayMessage.Show();
+            }
         }
 
         private void ControlPanelForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -118,13 +140,38 @@ namespace OrganizatorStudija
         {
             if (this.coursesListBox.SelectedItem != null)
             {
+                String tempCourseName = this.coursesListBox.SelectedItem.ToString();
+                int tempUserId = this.loggedUserId;
                 CourseForm appCourseForm = new CourseForm();
-                appCourseForm.Text = this.coursesListBox.SelectedItem.ToString();
-                appCourseForm.argCourseName = this.coursesListBox.SelectedItem.ToString();
-                appCourseForm.argUserId = this.LoggedUserId;
+                appCourseForm.argUserId = tempUserId;
+                appCourseForm.argCourseName = tempCourseName;
                 appCourseForm.ControlPanel = this;
                 appCourseForm.Show();
             }
+        }
+
+        private void ControlPanelForm_Activated(object sender, EventArgs e)
+        {
+            this.refreshUserCoursesList();
+            this.refreshUserTasksList();
+        }
+
+        public void refreshUserTasksList()
+        {
+            // Get all tasks
+            List<task> userTaskList = dbClass.getAllTasks();
+            // Clear taskListBox items
+            this.taskListBox.Items.Clear();
+            // Iterate through table row's
+            foreach (task element in userTaskList)
+            {
+                if (element.owner == this.loggedUserId) // For currently logged user
+                {
+                    // Appdend task to listBox
+                    this.taskListBox.Items.Add(element.name);
+                }
+            }
+            this.taskTypeComboBox.SelectedIndex = 0;
         }
     }
 }

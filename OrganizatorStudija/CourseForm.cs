@@ -13,8 +13,8 @@ namespace OrganizatorStudija
     public partial class CourseForm : Form
     {
         DatabaseManipulationClass dbClass = new DatabaseManipulationClass();
-        public String courseName;
-        public int loggedUserId;
+        public String courseName = "Course name";
+        public int loggedUserId = 1;
         public ControlPanelForm appControlPanel = null;
 
         private course displayedCourse = new course();
@@ -29,6 +29,7 @@ namespace OrganizatorStudija
             set
             {
                 this.courseName = value;
+                this.Text = value;
             }
         }
 
@@ -62,19 +63,9 @@ namespace OrganizatorStudija
             InitializeComponent();
         }
 
-
-        // FUNCTIONS
-        private course getCourse()
-        {
-            course appCourse = new course();
-            appCourse = dbClass.getCourseByName(this.Text);
-            return appCourse;
-        }
-
-
         private void CourseForm_Load(object sender, EventArgs e)
         {
-            this.displayedCourse = this.getCourse();
+            this.displayedCourse = dbClass.getCourseByName(this.Text);
             this.fillFormData();
         }
 
@@ -137,7 +128,56 @@ namespace OrganizatorStudija
             appAddTaskForm.Text = "Add task for " + this.courseName;
             appAddTaskForm.courseName = this.courseName;
             appAddTaskForm.loggedUserId = this.loggedUserId;
+            appAddTaskForm.appCourseForm = this;
             appAddTaskForm.Show();
+        }
+
+        private void taskListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // Display task details
+            this.refreshTaskList();
+        }
+
+        public void refreshTaskList()
+        {
+            // Get all tasks
+            List<task> userTaskList = dbClass.getAllTasks();
+            // Clear taskListBox items
+            this.taskListBox.Items.Clear();
+            // Get current course id from table course
+            course appCourse = dbClass.getCourseByName(argCourseName);
+            // Iterate through table row's
+            foreach (task element in userTaskList)
+            {
+                if (element.owner == this.loggedUserId && element.course == appCourse.course_id) // For currently logged user and for current course
+                {
+                    // Appdend task to listBox
+                    this.taskListBox.Items.Add(element.name);
+                }
+            }
+            this.taskTypeComboBox.SelectedIndex = 0;
+        }
+
+        private void CourseForm_Activated(object sender, EventArgs e)
+        {
+            this.refreshTaskList();
+        }
+
+        private void removeButton_Click(object sender, EventArgs e)
+        {
+            if (this.taskListBox.SelectedItem != null)
+            {
+                // Remove selected course
+                String selectedTaskName = this.taskListBox.SelectedItem.ToString();
+                task appTask = dbClass.getTaskByName(selectedTaskName);
+                dbClass.removeTask(appTask.task_id);
+                this.refreshTaskList();
+            }
+            else
+            {
+                DisplayMessageForm appDisplayMessage = new DisplayMessageForm("Please select which task to remove!");
+                appDisplayMessage.Show();
+            }
         }
     }
 }

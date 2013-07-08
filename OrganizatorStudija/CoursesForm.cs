@@ -92,9 +92,11 @@ namespace OrganizatorStudija
 
         private void addCourseButton_Click(object sender, EventArgs e)
         {
+            String courseName = null;
+            course userCourse = null;
             // Add course for logged user
-            String courseName = this.coursesListBox.SelectedItem.ToString();
-            course userCourse = dbClass.getCourseByName(courseName);
+            courseName = this.coursesListBox.SelectedItem.ToString();
+            userCourse = dbClass.getCourseByName(courseName);
             dbClass.insertUserCourse(this.LoggedUserId, userCourse.course_id, "Active");
             // Refresh user courses list
             this.ControlPanel.refreshUserCoursesList();

@@ -45,7 +45,7 @@
             this.filterGroupBox = new System.Windows.Forms.GroupBox();
             this.displayLabel = new System.Windows.Forms.Label();
             this.searchTextBox = new System.Windows.Forms.TextBox();
-            this.courseTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.taskTypeComboBox = new System.Windows.Forms.ComboBox();
             this.searchLabel = new System.Windows.Forms.Label();
             this.removeButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
@@ -207,7 +207,7 @@
             // 
             this.filterGroupBox.Controls.Add(this.displayLabel);
             this.filterGroupBox.Controls.Add(this.searchTextBox);
-            this.filterGroupBox.Controls.Add(this.courseTypeComboBox);
+            this.filterGroupBox.Controls.Add(this.taskTypeComboBox);
             this.filterGroupBox.Controls.Add(this.searchLabel);
             this.filterGroupBox.Location = new System.Drawing.Point(6, 6);
             this.filterGroupBox.Name = "filterGroupBox";
@@ -232,20 +232,20 @@
             this.searchTextBox.Size = new System.Drawing.Size(132, 26);
             this.searchTextBox.TabIndex = 9;
             // 
-            // courseTypeComboBox
+            // taskTypeComboBox
             // 
-            this.courseTypeComboBox.FormattingEnabled = true;
-            this.courseTypeComboBox.Items.AddRange(new object[] {
+            this.taskTypeComboBox.FormattingEnabled = true;
+            this.taskTypeComboBox.Items.AddRange(new object[] {
             "All",
             "1st year",
             "2nd year",
             "3rd year",
             "4th year",
             "5th year"});
-            this.courseTypeComboBox.Location = new System.Drawing.Point(100, 19);
-            this.courseTypeComboBox.Name = "courseTypeComboBox";
-            this.courseTypeComboBox.Size = new System.Drawing.Size(103, 26);
-            this.courseTypeComboBox.TabIndex = 4;
+            this.taskTypeComboBox.Location = new System.Drawing.Point(100, 19);
+            this.taskTypeComboBox.Name = "taskTypeComboBox";
+            this.taskTypeComboBox.Size = new System.Drawing.Size(103, 26);
+            this.taskTypeComboBox.TabIndex = 4;
             // 
             // searchLabel
             // 
@@ -264,6 +264,7 @@
             this.removeButton.TabIndex = 3;
             this.removeButton.Text = "Remove task";
             this.removeButton.UseVisualStyleBackColor = true;
+            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
             // 
             // addButton
             // 
@@ -283,6 +284,7 @@
             this.taskListBox.Name = "taskListBox";
             this.taskListBox.Size = new System.Drawing.Size(426, 328);
             this.taskListBox.TabIndex = 0;
+            this.taskListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.taskListBox_MouseDoubleClick);
             // 
             // closeButton
             // 
@@ -318,6 +320,7 @@
             this.Name = "CourseForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Course";
+            this.Activated += new System.EventHandler(this.CourseForm_Activated);
             this.Load += new System.EventHandler(this.CourseForm_Load);
             this.courseTabControl.ResumeLayout(false);
             this.infoTabPage.ResumeLayout(false);
@@ -353,7 +356,7 @@
         private System.Windows.Forms.GroupBox filterGroupBox;
         private System.Windows.Forms.Label displayLabel;
         private System.Windows.Forms.TextBox searchTextBox;
-        private System.Windows.Forms.ComboBox courseTypeComboBox;
+        private System.Windows.Forms.ComboBox taskTypeComboBox;
         private System.Windows.Forms.Label searchLabel;
         private System.Windows.Forms.Button saveButton;
 

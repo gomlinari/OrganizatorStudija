@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c4663867638a42c08764197e504dedef" Name="Diagram1" ZoomLevel="85" >
+        <EntityTypeShape EntityType="AppModelNamespace.user" Width="1.5" PointX="0.5" PointY="3.125" />
+        <EntityTypeShape EntityType="AppModelNamespace.usefull_link" Width="1.5" PointX="0.5" PointY="0.75" />
+        <AssociationConnector Association="AppModelNamespace.userusefull_link" />
+        <EntityTypeShape EntityType="AppModelNamespace.course" Width="1.5" PointX="5.375" PointY="3.25" />
+        <EntityTypeShape EntityType="AppModelNamespace.userCourses" Width="1.5" PointX="3" PointY="3.375" />
+        <AssociationConnector Association="AppModelNamespace.useruserCourses" />
+        <AssociationConnector Association="AppModelNamespace.courseuserCourses" />
+        <EntityTypeShape EntityType="AppModelNamespace.staff" Width="1.5" PointX="8" PointY="0.5" />
+        <EntityTypeShape EntityType="AppModelNamespace.courseStaff" Width="1.5" PointX="5.375" PointY="0.875" />
+        <AssociationConnector Association="AppModelNamespace.staffcourseStaff" />
+        <AssociationConnector Association="AppModelNamespace.coursecourseStaff" />
+        <EntityTypeShape EntityType="AppModelNamespace.task" Width="1.5" PointX="3" PointY="6.5" />
+        <AssociationConnector Association="AppModelNamespace.userCoursestask" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

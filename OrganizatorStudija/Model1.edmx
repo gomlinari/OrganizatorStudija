@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AppModelNamespace.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AppModelNamespaceStoreContainer">
+    <EntitySet Name="users" EntityType="AppModelNamespace.Store.users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="usefull_links" EntityType="AppModelNamespace.Store.usefull_links" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="courses" EntityType="AppModelNamespace.Store.courses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="userCourses" EntityType="AppModelNamespace.Store.userCourses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="staff" EntityType="AppModelNamespace.Store.staff" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="courseStaff" EntityType="AppModelNamespace.Store.courseStaff" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tasks" EntityType="AppModelNamespace.Store.tasks" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="userusefull_link" Association="AppModelNamespace.Store.userusefull_link">
+      <End Role="user" EntitySet="users" />
+      <End Role="usefull_link" EntitySet="usefull_links" />
+    </AssociationSet>
+    <AssociationSet Name="useruserCourses" Association="AppModelNamespace.Store.useruserCourses">
+      <End Role="user" EntitySet="users" />
+      <End Role="userCourses" EntitySet="userCourses" />
+    </AssociationSet>
+    <AssociationSet Name="courseuserCourses" Association="AppModelNamespace.Store.courseuserCourses">
+      <End Role="course" EntitySet="courses" />
+      <End Role="userCourses" EntitySet="userCourses" />
+    </AssociationSet>
+    <AssociationSet Name="staffcourseStaff" Association="AppModelNamespace.Store.staffcourseStaff">
+      <End Role="staff" EntitySet="staff" />
+      <End Role="courseStaff" EntitySet="courseStaff" />
+    </AssociationSet>
+    <AssociationSet Name="coursecourseStaff" Association="AppModelNamespace.Store.coursecourseStaff">
+      <End Role="course" EntitySet="courses" />
+      <End Role="courseStaff" EntitySet="courseStaff" />
+    </AssociationSet>
+    <AssociationSet Name="userCoursestask" Association="AppModelNamespace.Store.userCoursestask">
+      <End Role="userCourses" EntitySet="userCourses" />
+      <End Role="task" EntitySet="tasks" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="first_name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="last_name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usefull_links">
+    <Key>
+      <PropertyRef Name="link_id" />
+    </Key>
+    <Property Name="link_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="link" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="table_user_id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="courses">
+    <Key>
+      <PropertyRef Name="course_id" />
+    </Key>
+    <Property Name="course_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ects" Type="smallint" Nullable="false" />
+    <Property Name="year" Type="smallint" Nullable="false" />
+    <Property Name="colour" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="userCourses">
+    <Key>
+      <PropertyRef Name="table_user_id" />
+      <PropertyRef Name="table_course_id" />
+    </Key>
+    <Property Name="table_user_id" Type="int" Nullable="false" />
+    <Property Name="table_course_id" Type="int" Nullable="false" />
+    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="staff">
+    <Key>
+      <PropertyRef Name="staff_id" />
+    </Key>
+    <Property Name="staff_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="first_name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="last_name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="courseStaff">
+    <Key>
+      <PropertyRef Name="table_staff_id" />
+      <PropertyRef Name="table_course_id" />
+    </Key>
+    <Property Name="table_staff_id" Type="int" Nullable="false" />
+    <Property Name="table_course_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tasks">
+    <Key>
+      <PropertyRef Name="task_id" />
+    </Key>
+    <Property Name="task_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="points" Type="smallint" Nullable="false" />
+    <Property Name="points_max" Type="smallint" Nullable="false" />
+    <Property Name="start_date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="end_date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="owner" Type="int" Nullable="false" />
+    <Property Name="course" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="userusefull_link">
+    <End Role="user" Type="AppModelNamespace.Store.users" Multiplicity="1" />
+    <End Role="usefull_link" Type="AppModelNamespace.Store.usefull_links" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="usefull_link">
+        <PropertyRef Name="table_user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="useruserCourses">
+    <End Role="user" Type="AppModelNamespace.Store.users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="userCourses" Type="AppModelNamespace.Store.userCourses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="userCourses">
+        <PropertyRef Name="table_user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="courseuserCourses">
+    <End Role="course" Type="AppModelNamespace.Store.courses" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="userCourses" Type="AppModelNamespace.Store.userCourses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="course">
+        <PropertyRef Name="course_id" />
+      </Principal>
+      <Dependent Role="userCourses">
+        <PropertyRef Name="table_course_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="staffcourseStaff">
+    <End Role="staff" Type="AppModelNamespace.Store.staff" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="courseStaff" Type="AppModelNamespace.Store.courseStaff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="staff">
+        <PropertyRef Name="staff_id" />
+      </Principal>
+      <Dependent Role="courseStaff">
+        <PropertyRef Name="table_staff_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="coursecourseStaff">
+    <End Role="course" Type="AppModelNamespace.Store.courses" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="courseStaff" Type="AppModelNamespace.Store.courseStaff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="course">
+        <PropertyRef Name="course_id" />
+      </Principal>
+      <Dependent Role="courseStaff">
+        <PropertyRef Name="table_course_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userCoursestask">
+    <End Role="userCourses" Type="AppModelNamespace.Store.userCourses" Multiplicity="1" />
+    <End Role="task" Type="AppModelNamespace.Store.tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userCourses">
+        <PropertyRef Name="table_user_id" />
+        <PropertyRef Name="table_course_id" />
+      </Principal>
+      <Dependent Role="task">
+        <PropertyRef Name="owner" />
+        <PropertyRef Name="course" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AppModelNamespace" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AppConnectionSettings" p1:LazyLoadingEnabled="true" >
+          <EntitySet Name="users" EntityType="AppModelNamespace.user" />
+          <EntitySet Name="usefull_links" EntityType="AppModelNamespace.usefull_link" />
+          <AssociationSet Name="userusefull_link" Association="AppModelNamespace.userusefull_link">
+            <End Role="user" EntitySet="users" />
+            <End Role="usefull_link" EntitySet="usefull_links" />
+          </AssociationSet>
+          <EntitySet Name="courses" EntityType="AppModelNamespace.course" />
+          <EntitySet Name="userCourses" EntityType="AppModelNamespace.userCourses" />
+          <AssociationSet Name="useruserCourses" Association="AppModelNamespace.useruserCourses">
+            <End Role="user" EntitySet="users" />
+            <End Role="userCourses" EntitySet="userCourses" />
+          </AssociationSet>
+          <AssociationSet Name="courseuserCourses" Association="AppModelNamespace.courseuserCourses">
+            <End Role="course" EntitySet="courses" />
+            <End Role="userCourses" EntitySet="userCourses" />
+          </AssociationSet>
+          <EntitySet Name="staff" EntityType="AppModelNamespace.staff" />
+          <EntitySet Name="courseStaff" EntityType="AppModelNamespace.courseStaff" />
+          <AssociationSet Name="staffcourseStaff" Association="AppModelNamespace.staffcourseStaff">
+            <End Role="staff" EntitySet="staff" />
+            <End Role="courseStaff" EntitySet="courseStaff" />
+          </AssociationSet>
+          <AssociationSet Name="coursecourseStaff" Association="AppModelNamespace.coursecourseStaff">
+            <End Role="course" EntitySet="courses" />
+            <End Role="courseStaff" EntitySet="courseStaff" />
+          </AssociationSet>
+          <EntitySet Name="tasks" EntityType="AppModelNamespace.task" />
+          <AssociationSet Name="userCoursestask" Association="AppModelNamespace.userCoursestask">
+            <End Role="userCourses" EntitySet="userCourses" />
+            <End Role="task" EntitySet="tasks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Type="Int32" Name="user_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="user_name" Nullable="false" />
+          <Property Type="String" Name="password" Nullable="false" />
+          <Property Type="String" Name="first_name" Nullable="false" />
+          <Property Type="String" Name="last_name" Nullable="false" />
+          <NavigationProperty Name="usefull_link" Relationship="AppModelNamespace.userusefull_link" FromRole="user" ToRole="usefull_link" />
+          <NavigationProperty Name="userCourses" Relationship="AppModelNamespace.useruserCourses" FromRole="user" ToRole="userCourses" />
+        </EntityType>
+        <EntityType Name="usefull_link">
+          <Key>
+            <PropertyRef Name="link_id" />
+          </Key>
+          <Property Type="Int32" Name="link_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="link" Nullable="false" />
+          <Property Type="Int32" Name="table_user_id" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="AppModelNamespace.userusefull_link" FromRole="usefull_link" ToRole="user" />
+          <Property Type="String" Name="name" Nullable="false" />
+        </EntityType>
+        <Association Name="userusefull_link">
+          <End Type="AppModelNamespace.user" Role="user" Multiplicity="1" />
+          <End Type="AppModelNamespace.usefull_link" Role="usefull_link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="usefull_link">
+              <PropertyRef Name="table_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="course">
+          <Key>
+            <PropertyRef Name="course_id" />
+          </Key>
+          <Property Type="Int32" Name="course_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="name" Nullable="false" />
+          <Property Type="Int16" Name="ects" Nullable="false" />
+          <Property Type="Int16" Name="year" Nullable="false" />
+          <Property Type="String" Name="colour" Nullable="false" />
+          <NavigationProperty Name="userCourses" Relationship="AppModelNamespace.courseuserCourses" FromRole="course" ToRole="userCourses" />
+          <NavigationProperty Name="courseStaffs" Relationship="AppModelNamespace.coursecourseStaff" FromRole="course" ToRole="courseStaff" />
+        </EntityType>
+        <EntityType Name="userCourses">
+          <Key>
+            <PropertyRef Name="table_user_id" />
+            <PropertyRef Name="table_course_id" />
+          </Key>
+          <Property Type="Int32" Name="table_user_id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="table_course_id" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="AppModelNamespace.useruserCourses" FromRole="userCourses" ToRole="user" />
+          <NavigationProperty Name="course" Relationship="AppModelNamespace.courseuserCourses" FromRole="userCourses" ToRole="course" />
+          <Property Type="String" Name="status" Nullable="false" />
+          <NavigationProperty Name="tasks" Relationship="AppModelNamespace.userCoursestask" FromRole="userCourses" ToRole="task" />
+        </EntityType>
+        <Association Name="useruserCourses">
+          <End Type="AppModelNamespace.user" Role="user" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AppModelNamespace.userCourses" Role="userCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="userCourses">
+              <PropertyRef Name="table_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="courseuserCourses">
+          <End Type="AppModelNamespace.course" Role="course" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AppModelNamespace.userCourses" Role="userCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="course">
+              <PropertyRef Name="course_id" />
+            </Principal>
+            <Dependent Role="userCourses">
+              <PropertyRef Name="table_course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="staff">
+          <Key>
+            <PropertyRef Name="staff_id" />
+          </Key>
+          <Property Type="Int32" Name="staff_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="title" Nullable="false" />
+          <Property Type="String" Name="first_name" Nullable="false" />
+          <Property Type="String" Name="last_name" Nullable="false" />
+          <NavigationProperty Name="courseStaffs" Relationship="AppModelNamespace.staffcourseStaff" FromRole="staff" ToRole="courseStaff" />
+        </EntityType>
+        <EntityType Name="courseStaff">
+          <Key>
+            <PropertyRef Name="table_staff_id" />
+            <PropertyRef Name="table_course_id" />
+          </Key>
+          <Property Type="Int32" Name="table_staff_id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="table_course_id" Nullable="false" />
+          <NavigationProperty Name="staff" Relationship="AppModelNamespace.staffcourseStaff" FromRole="courseStaff" ToRole="staff" />
+          <NavigationProperty Name="course" Relationship="AppModelNamespace.coursecourseStaff" FromRole="courseStaff" ToRole="course" />
+        </EntityType>
+        <Association Name="staffcourseStaff">
+          <End Type="AppModelNamespace.staff" Role="staff" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AppModelNamespace.courseStaff" Role="courseStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staff">
+              <PropertyRef Name="staff_id" />
+            </Principal>
+            <Dependent Role="courseStaff">
+              <PropertyRef Name="table_staff_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="coursecourseStaff">
+          <End Type="AppModelNamespace.course" Role="course" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AppModelNamespace.courseStaff" Role="courseStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="course">
+              <PropertyRef Name="course_id" />
+            </Principal>
+            <Dependent Role="courseStaff">
+              <PropertyRef Name="table_course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="task_id" />
+          </Key>
+          <Property Type="Int32" Name="task_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="name" Nullable="false" />
+          <Property Type="String" Name="description" Nullable="false" />
+          <Property Type="Int16" Name="points" Nullable="false" />
+          <Property Type="Int16" Name="points_max" Nullable="false" />
+          <Property Type="String" Name="start_date" Nullable="false" />
+          <Property Type="String" Name="end_date" Nullable="false" />
+          <Property Type="String" Name="status" Nullable="false" />
+          <Property Type="Int32" Name="owner" Nullable="false" />
+          <Property Type="Int32" Name="course" Nullable="false" />
+          <NavigationProperty Name="userCours" Relationship="AppModelNamespace.userCoursestask" FromRole="task" ToRole="userCourses" />
+        </EntityType>
+        <Association Name="userCoursestask">
+          <End Type="AppModelNamespace.userCourses" Role="userCourses" Multiplicity="1" />
+          <End Type="AppModelNamespace.task" Role="task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userCourses">
+              <PropertyRef Name="table_user_id" />
+              <PropertyRef Name="table_course_id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="owner" />
+              <PropertyRef Name="course" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AppModelNamespaceStoreContainer" CdmEntityContainer="AppConnectionSettings">
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModelNamespace.user)">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usefull_links">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModelNamespace.usefull_link)">
+        <MappingFragment StoreEntitySet="usefull_links">
+          <ScalarProperty Name="link_id" ColumnName="link_id" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="table_user_id" ColumnName="table_user_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="courses">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModelNamespace.course)">
+        <MappingFragment StoreEntitySet="courses">
+          <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ects" ColumnName="ects" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="colour" ColumnName="colour" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userCourses">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModelNamespace.userCourses)">
+        <MappingFragment StoreEntitySet="userCourses">
+          <ScalarProperty Name="table_user_id" ColumnName="table_user_id" />
+          <ScalarProperty Name="table_course_id" ColumnName="table_course_id" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="staff">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModelNamespace.staff)">
+        <MappingFragment StoreEntitySet="staff">
+          <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="courseStaff">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModelNamespace.courseStaff)">
+        <MappingFragment StoreEntitySet="courseStaff">
+          <ScalarProperty Name="table_staff_id" ColumnName="table_staff_id" />
+          <ScalarProperty Name="table_course_id" ColumnName="table_course_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tasks">
+      <EntityTypeMapping TypeName="IsTypeOf(AppModelNamespace.task)">
+        <MappingFragment StoreEntitySet="tasks">
+          <ScalarProperty Name="task_id" ColumnName="task_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="points" ColumnName="points" />
+          <ScalarProperty Name="points_max" ColumnName="points_max" />
+          <ScalarProperty Name="start_date" ColumnName="start_date" />
+          <ScalarProperty Name="end_date" ColumnName="end_date" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="owner" ColumnName="owner" />
+          <ScalarProperty Name="course" ColumnName="course" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
